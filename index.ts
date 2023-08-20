@@ -30,18 +30,18 @@ class scrapeMaybe {
     
         const data = (async () => {
             if(cache) {
-                if(!fs.existsSync(path.resolve(__dirname, '.cache'))) {
-                    fs.mkdirSync(path.resolve(__dirname, '.cache'))
+                if(!fs.existsSync(path.resolve(__dirname, this.cache_dir))) {
+                    fs.mkdirSync(path.resolve(__dirname, this.cache_dir))
                 }
         
-                if(fs.existsSync(path.resolve(__dirname, '.cache', Buffer.from(url).toString('base64')))) {
+                if(fs.existsSync(path.resolve(__dirname, this.cache_dir, Buffer.from(url).toString('base64')))) {
                     console.log(`🟢 Fetched ${url} from cache.`)
-                    return fs.readFileSync(path.resolve(__dirname, '.cache', Buffer.from(url).toString('base64')))            
+                    return fs.readFileSync(path.resolve(__dirname, this.cache_dir, Buffer.from(url).toString('base64')))            
                 } else {
                     console.log(`🟢 Fetched ${url} from the web, and cached.`)
                     let pageData = await this.fetchPage(url)
                     if(pageData) {
-                        fs.writeFileSync(path.resolve(__dirname, '.cache', Buffer.from(url).toString('base64')), pageData)      
+                        fs.writeFileSync(path.resolve(__dirname, this.cache_dir, Buffer.from(url).toString('base64')), pageData)      
                         return pageData
                     }
                     
