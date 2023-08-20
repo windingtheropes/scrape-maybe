@@ -5,7 +5,7 @@ import path from 'path'
 
 class scrapeMaybe {
     cache_dir: string;
-    constructor(_cache_dir: '.cache') {
+    constructor(_cache_dir = '.cache') {
         this.cache_dir = _cache_dir
     }
 
