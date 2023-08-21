@@ -36,27 +36,27 @@ class scrapeMaybe {
                 
                 const cached_path = path.resolve(__dirname, this.cache_dir, Buffer.from(url).toString('base64'))
                 if(fs.existsSync(cached_path)) {
-                    console.log(`🟣 ${url} exists in cache.`)
+                    console.log(`🟣 [scrapemaybe] ${url} exists in cache.`)
                     const cached_mtime = fs.lstatSync(cached_path).mtime.getTime()
 
                     if(recache > 0) {
                         const time_diff = new Date().getTime() - cached_mtime
                         if(time_diff >= recache) {
-                            console.log(`🟣 Cached version of ${url} has expired.`)
+                            console.log(`🟣 [scrapemaybe] Cached version of ${url} has expired.`)
                             let pageData = await this.fetchPage(url)
                             if(pageData) {
                                 fs.writeFileSync(cached_path, pageData)   
-                                console.log(`🟢 Fetched ${url} from the web, and recached.`)
+                                console.log(`🟢 [scrapemaybe] Fetched ${url} from the web, and recached.`)
                                 return pageData
                             }
                         }
                         else {
-                            console.log(`🟢 Fetched ${url} from cache.`)
+                            console.log(`🟢 [scrapemaybe] Fetched ${url} from cache.`)
                             return fs.readFileSync(cached_path)    
                         }
                     }
                     else {
-                        console.log(`🟢 Fetched ${url} from cache.`)
+                        console.log(`🟢 [scrapemaybe] Fetched ${url} from cache.`)
                         return fs.readFileSync(cached_path)    
                     }
                        
@@ -64,13 +64,13 @@ class scrapeMaybe {
                     let pageData = await this.fetchPage(url)
                     if(pageData) {
                         fs.writeFileSync(cached_path, pageData)      
-                        console.log(`🟢 Fetched ${url} from the web, and cached.`)
+                        console.log(`🟢 [scrapemaybe] Fetched ${url} from the web, and cached.`)
                         return pageData
                     }
                 }
             }
             else {
-                console.log(`🟢 Fetched ${url} from the web.`)
+                console.log(`🟢 [scrapemaybe] Fetched ${url} from the web.`)
                 let pageData = await this.fetchPage(url)
                 return pageData
             }
