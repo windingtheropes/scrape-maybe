@@ -38,6 +38,7 @@ class scrapeMaybe {
                 if(fs.existsSync(cached_path)) {
                     console.log(`🟣 ${url} exists in cache.`)
                     const cached_mtime = fs.lstatSync(cached_path).mtime.getTime()
+
                     if(recache > 0) {
                         const time_diff = new Date().getTime() - cached_mtime
                         if(time_diff >= recache) {
@@ -49,11 +50,16 @@ class scrapeMaybe {
                                 return pageData
                             }
                         }
+                        else {
+                            console.log(`🟢 Fetched ${url} from cache.`)
+                            return fs.readFileSync(cached_path)    
+                        }
                     }
                     else {
                         console.log(`🟢 Fetched ${url} from cache.`)
-                        return fs.readFileSync(cached_path)  
-                    }      
+                        return fs.readFileSync(cached_path)    
+                    }
+                       
                 } else {
                     let pageData = await this.fetchPage(url)
                     if(pageData) {
